@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sofiya's Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    
+    <style>
+
+
+        
+.section-title {
+    font-size: 3rem;  
+    font-weight: 700;  
+    text-transform: uppercase;  
+    text-align: center;
+    position: relative;
+    display: inline-block;
+    margin-bottom: 3rem;
+    color: var(--soft-pink);
+}
+
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 5px;
+    background: linear-gradient(90deg, var(--vibrant-pink), var(--deep-maroon));
+    border-radius: 2px;
+}
+
+
+.fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+}
+
+.fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+        :root {
+            --soft-pink: #FFD9DA;
+            --vibrant-pink: #EA638C;
+            --deep-maroon: #89023E;
+            --dark-gray: #30343F;
+            --almost-black: #1B2021;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--almost-black);
+            color: var(--soft-pink);
+        }
+
+        
+        .nav-link {
+            position: relative;
+            padding-bottom: 2px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--vibrant-pink);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        
+        .typing::after {
+            content: "|";
+            animation: blink 0.7s infinite;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0; }
+        }
+
+        
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        
+        @keyframes floatImage {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .floating {
+            animation: floatImage 3s ease-in-out infinite;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header & Navigation -->
+    <header class="py-6 bg-[var(--dark-gray)] shadow-md fixed w-full z-50">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold">
+                Shaifali Chouhan
+            </h1>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:block">
+                <ul class="flex space-x-6">
+                    <li><a href="#home" class="nav-link">Home</a></li>
+                    <li><a href="#about" class="nav-link">About</a></li>
+                    <li><a href="#skills" class="nav-link">Skills</a></li>
+                    <li><a href="#projects" class="nav-link">Projects</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                </ul>
+            </nav>
+
+            <!-- Mobile Menu Button -->
+            <button id="menu-btn" class="md:hidden text-2xl">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-section pt-32 pb-20">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
+            
+            <!-- Left Side (Text Content) -->
+            <div class="md:w-1/2 mb-12 md:mb-0 fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">
+                    Hi, I'm <span class="gradient-text">Shaifali</span>
+                </h2>
+                <p class="text-lg mb-6 text-[var(--soft-pink)]">
+                    <span class="font-bold" id="typed-text"></span> <!-- Dynamic Typing Text -->
+                </p>
+                
+                <!-- Resume Download Button -->
+                <a href="https://drive.google.com/file/d/YOUR_RESUME_LINK/view?usp=sharing" 
+                   target="_blank" 
+                   class="bg-[var(--vibrant-pink)] text-white px-8 py-3 rounded-full hover:bg-[var(--deep-maroon)] transition fade-in">
+                    Download Resume
+                </a>
+            </div>
+
+            <!-- Right Side (Profile Image) -->
+            <div class="md:w-1/2 flex justify-center">
+                <img src="https://your-profile-image-link.jpg" 
+                     alt="Sofiya"
+                     class="rounded-full shadow-xl floating w-64 h-64">
+            </div>
+
+        </div>
+    </section>
+
+    <!-- JavaScript for Typing Animation & Fade-in Effect -->
+    <script>
+        // Typing Animation
+        const roles = ["Aspiring Data Analyst", "Python Enthusiast", "SQL Expert", "Data Visualization Specialist"];
+        let index = 0;
+        let charIndex = 0;
+        let typingSpeed = 100;
+        let deletingSpeed = 50;
+
+        function typeEffect() {
+            let typedText = document.getElementById("typed-text");
+            let currentRole = roles[index];
+            
+            if (charIndex < currentRole.length) {
+                typedText.innerHTML = currentRole.substring(0, charIndex + 1) + '<span class="typing"></span>';
+                charIndex++;
+                setTimeout(typeEffect, typingSpeed);
+            } else {
+                setTimeout(deleteEffect, 1000);
+            }
+        }
+
+        function deleteEffect() {
+            let typedText = document.getElementById("typed-text");
+            let currentRole = roles[index];
+
+            if (charIndex > 0) {
+                typedText.innerHTML = currentRole.substring(0, charIndex - 1) + '<span class="typing"></span>';
+                charIndex--;
+                setTimeout(deleteEffect, deletingSpeed);
+            } else {
+                index = (index + 1) % roles.length;
+                setTimeout(typeEffect, typingSpeed);
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", typeEffect);
+
+        // Fade-in Effect on Scroll
+        document.addEventListener("DOMContentLoaded", function () {
+            let elements = document.querySelectorAll(".fade-in");
+
+            function fadeInOnScroll() {
+                elements.forEach((el) => {
+                    let position = el.getBoundingClientRect().top;
+                    let screenHeight = window.innerHeight;
+                    if (position < screenHeight - 50) {
+                        el.classList.add("visible");
+                    }
+                });
+            }
+
+            fadeInOnScroll();
+            window.addEventListener("scroll", fadeInOnScroll);
+        });
+    </script>
+
+</body>
+</html>
+
+
+ 
+<!-- About Me Section -->
+<section id="about" class="py-20 bg-[var(--dark-gray)]">
+    <div class="container mx-auto px-4 text-center fade-in">
+        <h2 class="section-title">About Me</h2>
+    </div>
+
+    <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-8 items-center mt-8 fade-in">
+        
+        <!-- Left Side: About Me Text -->
+        <div class="text-lg text-[var(--soft-pink)]">
+            <p class="mb-4">
+                I'm an <b>aspiring Data Analyst</b> currently pursuing <b>BCA</b> with a strong foundation in <b>Python, SQL, and Data Visualization</b>.  
+                My interest lies in exploring data and finding meaningful patterns to make data-driven decisions.
+            </p>
+            <p class="mb-4">
+                I am passionate about problem-solving, working with real-world datasets, and continuously learning new technologies to improve my analytical skills.
+            </p>
+            <p class="mb-4">
+                My goal is to enhance my ability to extract insights from data, make impactful decisions, and contribute to data-driven projects.
+            </p>
+        </div>
+
+        <!-- Right Side: What I Do? (Instead of Repeating Projects) -->
+        <div class="bg-[var(--almost-black)] p-6 rounded-lg shadow-lg border-l-4 border-[var(--vibrant-pink)]">
+            <h3 class="text-2xl font-bold text-[var(--vibrant-pink)]">What I Do?</h3>
+            <ul class="list-disc list-inside text-gray-300 mt-3">
+                <li>📊 Analyze datasets using <b>Python (Pandas, NumPy)</b></li>
+                <li>💡 Use <b>SQL</b> to extract insights from databases</li>
+                <li>📉 Create impactful visualizations using <b>Matplotlib & Seaborn</b></li>
+                <li>🎯 Solve real-world business problems using data</li>
+                <li>🚀 Continuously learning and applying <b>new Data Science techniques</b></li>
+            </ul>
+        </div>
+
+    </div>
+</section>
+
+
+
+
+
+<!-- Skills Section -->
+<section id="skills" class="py-20 bg-[var(--almost-black)]">
+    <div class="container mx-auto px-4 text-center fade-in">
+        <h2 class="section-title">Skills</h2>
+    </div>
+
+    <!-- Skills Grid -->
+    <div class="container mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8 mt-8">
+        
+        <!-- Skill 1: Python -->
+        <div class="skill-card p-6 bg-[var(--dark-gray)] rounded-lg shadow-md text-center fade-in group transition-all duration-500 hover:scale-105 hover:shadow-lg hover:shadow-[var(--vibrant-pink)]">
+            <i class="fab fa-python text-5xl text-[var(--vibrant-pink)] mb-4"></i>
+            <h3 class="text-xl font-bold text-[var(--soft-pink)]">Python</h3>
+            <p class="text-sm text-gray-400">Pandas, NumPy, Data Cleaning</p>
+        </div>
+
+        <!-- Skill 2: SQL -->
+        <div class="skill-card p-6 bg-[var(--dark-gray)] rounded-lg shadow-md text-center fade-in group transition-all duration-500 hover:scale-105 hover:shadow-lg hover:shadow-[var(--vibrant-pink)]">
+            <i class="fas fa-database text-5xl text-[var(--vibrant-pink)] mb-4"></i>
+            <h3 class="text-xl font-bold text-[var(--soft-pink)]">SQL</h3>
+            <p class="text-sm text-gray-400">Joins, Window Functions</p>
+        </div>
+
+        <!-- Skill 3: Data Visualization -->
+        <div class="skill-card p-6 bg-[var(--dark-gray)] rounded-lg shadow-md text-center fade-in group transition-all duration-500 hover:scale-105 hover:shadow-lg hover:shadow-[var(--vibrant-pink)]">
+            <i class="fas fa-chart-bar text-5xl text-[var(--vibrant-pink)] mb-4"></i>
+            <h3 class="text-xl font-bold text-[var(--soft-pink)]">Data Visualization</h3>
+            <p class="text-sm text-gray-400">Matplotlib, Seaborn</p>
+        </div>
+
+        <!-- Skill 4: Excel -->
+        <div class="skill-card p-6 bg-[var(--dark-gray)] rounded-lg shadow-md text-center fade-in group transition-all duration-500 hover:scale-105 hover:shadow-lg hover:shadow-[var(--vibrant-pink)]">
+            <i class="fas fa-file-excel text-5xl text-[var(--vibrant-pink)] mb-4"></i>
+            <h3 class="text-xl font-bold text-[var(--soft-pink)]">Excel</h3>
+            <p class="text-sm text-gray-400">Pivot Tables, VLOOKUP</p>
+        </div>
+
+        <!-- Skill 5: Power BI -->
+        <div class="skill-card p-6 bg-[var(--dark-gray)] rounded-lg shadow-md text-center fade-in group transition-all duration-500 hover:scale-105 hover:shadow-lg hover:shadow-[var(--vibrant-pink)]">
+            <i class="fas fa-chart-pie text-5xl text-[var(--vibrant-pink)] mb-4"></i>
+            <h3 class="text-xl font-bold text-[var(--soft-pink)]">Power BI</h3>
+            <p class="text-sm text-gray-400">Dashboards & Reports</p>
+        </div>
+
+        <!-- Skill 6: Web Development -->
+        <div class="skill-card p-6 bg-[var(--dark-gray)] rounded-lg shadow-md text-center fade-in group transition-all duration-500 hover:scale-105 hover:shadow-lg hover:shadow-[var(--vibrant-pink)]">
+            <i class="fas fa-code text-5xl text-[var(--vibrant-pink)] mb-4"></i>
+            <h3 class="text-xl font-bold text-[var(--soft-pink)]">Web Development</h3>
+            <p class="text-sm text-gray-400">HTML, CSS, JavaScript</p>
+        </div>
+
+        <!-- Skill 7: Soft Skills -->
+        <div class="skill-card p-6 bg-[var(--dark-gray)] rounded-lg shadow-md text-center fade-in group transition-all duration-500 hover:scale-105 hover:shadow-lg hover:shadow-[var(--vibrant-pink)]">
+            <i class="fas fa-user-tie text-5xl text-[var(--vibrant-pink)] mb-4"></i>
+            <h3 class="text-xl font-bold text-[var(--soft-pink)]">Soft Skills</h3>
+            <p class="text-sm text-gray-400">Problem-Solving, Communication</p>
+        </div>
+
+    </div>
+</section>
+
+<!-- JavaScript for Fade-in Animation -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let elements = document.querySelectorAll(".fade-in");
+
+        function fadeInOnScroll() {
+            elements.forEach((el) => {
+                let position = el.getBoundingClientRect().top;
+                let screenHeight = window.innerHeight;
+                if (position < screenHeight - 50) {
+                    el.classList.add("visible");
+                }
+            });
+        }
+
+        fadeInOnScroll();
+        window.addEventListener("scroll", fadeInOnScroll);
+    });
+</script>
+
+<!-- Extra CSS for Smooth Fade-in Animation -->
+<style>
+    .fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+    }
+
+    .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+</style>
+
+    
+
+<!-- Projects Section -->
+<section id="projects" class="py-20 bg-[var(--dark-gray)]">
+    <div class="container mx-auto px-4 text-center fade-in">
+        <h2 class="section-title">Projects</h2>
+    </div>
+
+    <!-- Projects Grid (All 3 Projects in One Row) -->
+    <div class="container mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8 mt-8">
+        
+        <!-- Project 1: Netflix Data Analysis -->
+        <div class="project-card group relative overflow-hidden rounded-lg shadow-lg transition-transform duration-300 
+                    hover:scale-105 bg-gradient-to-r from-[var(--vibrant-pink)] to-[var(--deep-maroon)] p-1 fade-in">
+            <div class="bg-[var(--dark-gray)] rounded-lg overflow-hidden transition-all duration-500 hover:shadow-lg hover:shadow-[var(--vibrant-pink)]">
+                <img src="https://cdn.analyticsvidhya.com/wp-content/uploads/2024/07/How-Netflix-Uses-Data-Science.webp" 
+                     alt="Netflix Data Analysis" class="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-105">
+                <div class="p-6">
+                    <h3 class="font-bold text-xl mb-2 text-[var(--soft-pink)]">Netflix Data Analysis</h3>
+                    <p class="text-sm text-gray-300 mb-2"><b>Tech:</b> Python, Pandas, Seaborn</p>
+                    <a href="https://github.com/sofiyachouhan/Netflix-Data-Analysis" 
+                       target="_blank" 
+                       class="text-[var(--vibrant-pink)] hover:text-[var(--deep-maroon)] font-bold">
+                        View on GitHub →
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 2: Titanic Data Analysis -->
+        <div class="project-card group relative overflow-hidden rounded-lg shadow-lg transition-transform duration-300 
+                    hover:scale-105 bg-gradient-to-r from-[var(--vibrant-pink)] to-[var(--deep-maroon)] p-1 fade-in">
+            <div class="bg-[var(--dark-gray)] rounded-lg overflow-hidden transition-all duration-500 hover:shadow-lg hover:shadow-[var(--vibrant-pink)]">
+                <img src="https://itg.com.pl/wp-content/uploads/2023/12/titanic.webp" 
+                     alt="Titanic Data Analysis" class="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-105">
+                <div class="p-6">
+                    <h3 class="font-bold text-xl mb-2 text-[var(--soft-pink)]">Titanic Data Analysis</h3>
+                    <p class="text-sm text-gray-300 mb-2"><b>Tech:</b> Python, Pandas, Matplotlib</p>
+                    <a href="https://github.com/sofiyachouhan/Titanic-Data-Analysis" 
+                       target="_blank" 
+                       class="text-[var(--vibrant-pink)] hover:text-[var(--deep-maroon)] font-bold">
+                        View on GitHub →
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project 3: Pizza Sales Analysis -->
+        <div class="project-card group relative overflow-hidden rounded-lg shadow-lg transition-transform duration-300 
+                    hover:scale-105 bg-gradient-to-r from-[var(--vibrant-pink)] to-[var(--deep-maroon)] p-1 fade-in">
+            <div class="bg-[var(--dark-gray)] rounded-lg overflow-hidden transition-all duration-500 hover:shadow-lg hover:shadow-[var(--vibrant-pink)]">
+                <img src="https://media.licdn.com/dms/image/D5612AQEifegCRHYcdw/article-cover_image-shrink_720_1280/0/1716196277228?e=2147483647&v=beta&t=SUqetnQmajZihLb2pnPrmSNhwnQlQF-k_6KsIehz4ks" 
+                     alt="Pizza Sales Analysis" class="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-105">
+                <div class="p-6">
+                    <h3 class="font-bold text-xl mb-2 text-[var(--soft-pink)]">Pizza Sales Analysis</h3>
+                    <p class="text-sm text-gray-300 mb-2"><b>Tech:</b> Python, SQL, Pandas, Matplotlib</p>
+                    <a href="https://github.com/sofiyachouhan/Pizza-Sales-Management-System" 
+                       target="_blank" 
+                       class="text-[var(--vibrant-pink)] hover:text-[var(--deep-maroon)] font-bold">
+                        View on GitHub →
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- JavaScript for Fade-in Animation -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let elements = document.querySelectorAll(".fade-in");
+
+        function fadeInOnScroll() {
+            elements.forEach((el) => {
+                let position = el.getBoundingClientRect().top;
+                let screenHeight = window.innerHeight;
+                if (position < screenHeight - 50) {
+                    el.classList.add("visible");
+                }
+            });
+        }
+
+        fadeInOnScroll();
+        window.addEventListener("scroll", fadeInOnScroll);
+    });
+</script>
+
+<!-- Extra CSS for Smooth Fade-in Animation -->
+<style>
+    .fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 1.2s ease-out, transform 1.2s ease-out;
+    }
+
+    .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+</style>
+
+
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-[var(--almost-black)]">
+        <div class="container mx-auto px-4 max-w-2xl">
+            <h2 class="section-title text-center">Contact Me</h2>
+            <form class="space-y-6 vertical-form" action="https://submit-form.com/rXs1uLYhE">
+                <div>
+                    <label for="first-name">First Name</label>
+                    <input id="first-name" name="first-name" type="text" class="w-full px-4 py-3 rounded-lg border border-[var(--vibrant-pink)] focus:outline-none focus:ring-2 focus:ring-[var(--vibrant-pink)] bg-[var(--dark-gray)]">
+                </div>
+                <div>
+                    <label for="email">Email</label>
+                    <input id="email" name="email" type="email" class="w-full px-4 py-3 rounded-lg border border-[var(--vibrant-pink)] focus:outline-none focus:ring-2 focus:ring-[var(--vibrant-pink)] bg-[var(--dark-gray)]">
+                </div>
+                <div>
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" rows="5" class="w-full px-4 py-3 rounded-lg border border-[var(--vibrant-pink)] focus:outline-none focus:ring-2 focus:ring-[var(--vibrant-pink)] bg-[var(--dark-gray)]"></textarea>
+                </div>
+                <button type="submit" class="w-full bg-[var(--vibrant-pink)] text-white py-3 rounded-lg hover:bg-[var(--deep-maroon)] transition">
+                    Submit
+                </button>
+            </form>
+        </div>
+    </section>
+    
+
+
+    
+
+    <footer class="footer py-8">
+        <div class="container mx-auto px-4 text-center">
+            <div class="flex justify-center space-x-4 mb-6">
+                <a href="https://www.linkedin.com/in/shaifali-chouhan-827926324/" target="_blank" class="w-12 h-12 bg-white rounded-full flex justify-center items-center shadow-lg hover:scale-110 transition">
+                    <img src="https://cdn-icons-png.flaticon.com/512/174/174857.png" alt="LinkedIn" class="w-6 h-6">
+                </a>
+                <a href="https://github.com/sofiyachouhan" target="_blank" class="w-12 h-12 bg-white rounded-full flex justify-center items-center shadow-lg hover:scale-110 transition">
+                    <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="GitHub" class="w-6 h-6">
+                </a>
+                <a href="https://x.com/Shaifali1312?t=ZVUooXQZoema46vBks1gOw&s=09" target="_blank" class="w-12 h-12 bg-white rounded-full flex justify-center items-center shadow-lg hover:scale-110 transition">
+                    <img src="https://cdn-icons-png.flaticon.com/512/5968/5968830.png" alt="Twitter" class="w-6 h-6">
+                </a>
+                <a href="mailto:sofiyachouhan1312@gmail.com" class="w-12 h-12 bg-white rounded-full flex justify-center items-center shadow-lg hover:scale-110 transition">
+                    <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Email" class="w-6 h-6">
+                </a>
+            </div>
+            <p class="text-sm">&copy; 2024 Shaifali's Portfolio. All rights reserved.</p>
+        </div>
+    </footer>
+    <div class="divider"></div>
+
+
+   </body>
+</html>
